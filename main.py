@@ -3,6 +3,7 @@ from modules.menu import show_menu
 from modules.dns_lookup import dns_lookup
 from modules.ping_test import ping_host
 from modules.utils import display_ping_results
+from modules.http_check import check_http
 
 
 def main():
@@ -16,7 +17,7 @@ def main():
         choice = show_menu()
 
         # ------------------------
-        # Option 1
+        # Option 1 - DNS Lookup
         # ------------------------
 
         if choice == "1":
@@ -35,7 +36,7 @@ def main():
                 print("\nDNS Resolution Failed")
 
         # ------------------------
-        # Option 2
+        # Option 2 - Ping Test
         # ------------------------
 
         elif choice == "2":
@@ -45,13 +46,52 @@ def main():
             display_ping_results(ping_stats)
 
         # ------------------------
-        # Exit
+        # Option 3 - HTTP Health Check
+        # ------------------------
+
+        elif choice == "3":
+
+            print("\nHTTP HEALTH CHECK")
+            print("----------------------------")
+
+            url = input(
+                "Enter URL (Example: https://google.com): "
+            ).strip()
+
+            # Add https automatically if the user
+            # enters only a hostname.
+            if not url.startswith(("http://", "https://")):
+                url = "https://" + url
+
+            result = check_http(url)
+
+            print(f"\nTarget          : {url}")
+            print(f"Status          : {result['status']}")
+            print(f"HTTP Status     : {result['http_status']}")
+
+            if result["response_time"] is not None:
+                print(
+                    f"Response Time   : "
+                    f"{result['response_time']} ms"
+                )
+            else:
+                print("Response Time   : N/A")
+
+            if result["status"] == "DOWN":
+                print(f"Error           : {result['error']}")
+
+        # ------------------------
+        # Option 8 - Exit
         # ------------------------
 
         elif choice == "8":
 
             print("\nThank you for using NetProbe!")
             break
+
+        # ------------------------
+        # Invalid Option
+        # ------------------------
 
         else:
 
