@@ -5,6 +5,7 @@ from modules.ping_test import ping_host
 from modules.utils import display_ping_results
 from modules.http_check import check_http
 from modules.port_scan import scan_common_ports
+from modules.traceroute_test import run_traceroute
 
 
 def main():
@@ -118,6 +119,30 @@ def main():
                     f"{result['service']:<15}"
                     f"{result['status']}"
                 )
+
+        # ------------------------
+        # Option 5 - Traceroute
+        # ------------------------
+
+        elif choice == "5":
+
+            print("\nTRACEROUTE")
+            print("----------------------------")
+            print(f"Target : {hostname}")
+
+            result = run_traceroute(hostname)
+
+            if result["status"] == "SUCCESS":
+
+                print("\nTraceroute Results")
+                print("----------------------------")
+                print(result["output"])
+
+            else:
+
+                print("\nTraceroute Failed")
+                print("----------------------------")
+                print(result["output"])
 
         # ------------------------
         # Option 8 - Exit
