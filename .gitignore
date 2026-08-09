@@ -1,12 +1,5 @@
-# Python Virtual Environment
 venv/
-
-# Python Cache Files
 __pycache__/
 *.pyc
-
-# Generated Reports
 reports/
-
-# macOS Files
-.DS_Store
+netprobe_report.txt
